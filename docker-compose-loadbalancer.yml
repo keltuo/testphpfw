@@ -1,0 +1,56 @@
+version: '2.1'
+
+services:
+  lumen:
+    build:
+      context: ./lumen/
+    container_name: lumen
+    hostname: lumen
+    restart: unless-stopped
+    environment:
+      BLACKFIRE_CLIENT_ID:
+      BLACKFIRE_CLIENT_TOKEN:
+  lumen1:
+    build:
+      context: ./lumen/
+    container_name: lumen1
+    hostname: lumen1
+    restart: unless-stopped
+    environment:
+      BLACKFIRE_CLIENT_ID:
+      BLACKFIRE_CLIENT_TOKEN:
+  lumen2:
+    build:
+      context: ./lumen/
+    container_name: lumen2
+    hostname: lumen2
+    restart: unless-stopped
+    environment:
+      BLACKFIRE_CLIENT_ID:
+      BLACKFIRE_CLIENT_TOKEN:
+
+
+  blackfire:
+    image: blackfire/blackfire
+    environment:
+      BLACKFIRE_SERVER_ID:
+      BLACKFIRE_SERVER_TOKEN:
+
+  ab:
+    build:
+       context: AB
+       dockerfile: AB/Dockerfile
+    container_name: ab_test
+    restart: unless-stopped
+
+  loadbalancer:
+    build: LoadBalancer
+    links:
+      - lumen
+      - lumen1
+      - lumen2
+    ports:
+      - '8888:80'
+
+networks:
+  default:

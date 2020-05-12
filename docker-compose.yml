@@ -1,0 +1,43 @@
+version: '2.1'
+
+services:
+  lumen:
+    extends:
+      file: lumen/docker-compose.yml
+      service: lumen
+    environment:
+      BLACKFIRE_CLIENT_ID:
+      BLACKFIRE_CLIENT_TOKEN:
+
+
+  slimphp:
+    extends:
+      file: slimphp/docker-compose.yml
+      service: slimphp
+    environment:
+      BLACKFIRE_CLIENT_ID:
+      BLACKFIRE_CLIENT_TOKEN:
+
+  reactphp:
+    extends:
+      file: reactphp/docker-compose.yml
+      service: reactphp
+    environment:
+      BLACKFIRE_CLIENT_ID:
+      BLACKFIRE_CLIENT_TOKEN:
+
+
+  blackfire:
+    image: blackfire/blackfire
+    environment:
+      BLACKFIRE_SERVER_ID:
+      BLACKFIRE_SERVER_TOKEN: 
+
+  ab:
+    build:
+       context: ./AB
+    container_name: ab_test
+    restart: unless-stopped
+
+networks:
+  default:

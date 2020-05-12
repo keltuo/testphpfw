@@ -1,0 +1,15 @@
+version: '2.1'
+
+services:
+  lumen:
+    build:
+      context: .
+    image: php_lumen:latest
+    container_name: lumen
+    hostname: lumen
+    restart: unless-stopped
+    ports:
+      - '8880:80'
+
+networks:
+  default:

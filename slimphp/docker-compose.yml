@@ -1,0 +1,15 @@
+version: '2.1'
+
+services:
+  slimphp:
+    build:
+      context: .
+    image: php_slim:latest
+    container_name: slimphp
+    hostname: slimphp
+    restart: unless-stopped
+    ports:
+      - '8882:80'
+
+networks:
+  default:
